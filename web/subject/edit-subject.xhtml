@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <c:set var="subject" value="#{subjectTable.editSubject}" />
+    <p:messages id="msg-edit" showDetail="true"  />
+    <p:panelGrid columns="2" styleClass="panel-one-col">
+            
+                <h:outputLabel for="code" value="Code" />
+
+                <p:inputText id="code" value="#{subject.code}" />
+
+                <h:outputLabel for="name" value="Name" />
+
+                <p:inputText id="name" value="#{subject.name}" />  
+
+ 
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup align="left">
+            <p:commandButton value="Save"
+                                 icon="ui-icon-check"
+                             styleClass="small-button"
+                                 actionListener="#{subjectTable.updateOrAdd(subject)}"
+                                 update=":form-subject-list:table-subject-list, :form-subject-list:messages, :form-subject-list:msg-edit"
+                                 oncomplete="handleDialogRequest(xhr, status, args, 'dialog-edit-subject')"
+                                 />
+
+                <p:commandButton value="Close"
+                                 icon="ui-icon-close"
+                             styleClass="small-button"
+                                 onclick="PF('dialog-edit-subject').hide()" />
+        </p:toolbarGroup>
+    </p:toolbar>
+
+    <!--end table User-->
+
+</div>

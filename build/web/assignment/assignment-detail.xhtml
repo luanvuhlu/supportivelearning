@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <c:set var="assignment" value="#{assignmentTable.currentAssignment}" />
+    <!--Assignment info-->
+    <p:panelGrid columns="2">
+
+        <h:outputText value="Name" />
+
+        <h:outputText value="#{assignment.name}" />
+
+        <h:outputText value="File" />
+
+        <p:commandButton value="Download" ajax="true" onclick="PrimeFaces.monitorDownload(start, stop)"   
+                         icon="ui-icon-arrowthichk-s"
+                         styleClass="small-button">  
+            <p:fileDownload value="#{assignmentTable.download(assignment)}" />  
+        </p:commandButton>    
+
+        
+        <h:outputText value="Type" />
+
+        <c:if test="#{assignment.type eq false}">
+            <h:outputText value="First" />
+        </c:if>
+        <c:if test="#{assignment.type eq true}">
+            <h:outputText value="Second" />
+        </c:if>
+
+        <h:outputText value="Status" />
+
+        <c:if test="#{assignment.status eq true}">
+            <h:outputText value="Finish" />
+        </c:if>
+        <c:if test="#{assignment.status eq false}">
+            <h:outputText value="Unfinish" />
+        </c:if>
+
+        <h:outputText value="Description" />
+
+        <h:outputText value="#{assignment.description}" />
+
+        <h:outputText value="Start" />
+
+        <h:outputText value="#{assignment.startDate}" />
+
+        <h:outputText value="End" />
+
+        <h:outputText value="#{assignment.endDate}" />
+
+        <h:outputText value="Batch" />
+
+        <h:commandLink value="#{assignment.batch.name}"  />
+
+        <h:outputText value="Upload Person" />
+
+        <h:commandLink value="#{assignment.user.fullName}"  />
+
+        <p:button outcome="manager.xhtml?action=assignment&amp;a=edit&amp;ass=#{assignment.assignmentId}"
+                          styleClass="small-button"
+                          title="Edit"
+                          icon="ui-icon-pencil"
+                          value="Edit"
+                          target="_blank" />
+
+        <p:commandButton value="Close" onclick="PF('dialog-view-assignment').hide()" />
+    </p:panelGrid>
+    <!--End Assignment Info-->
+</div>

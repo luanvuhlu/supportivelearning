@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     class="login-dialog"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:form id="form">  
+    <p:growl id="growl" showDetail="true" life="3000" />  
+    <p:messages id="msg" showDetail="true" />
+        <h:panelGrid columns="2" cellpadding="5">  
+            <h:outputLabel for="username" value="Username:" />  
+            <p:inputText value="#{loginBean.username}"   
+                         id="username" required="true" 
+                         label="username"
+                         tabindex="1"
+                         requiredMessage="Username is empty"/>  
+              
+            <h:outputLabel for="password" value="Password:" />  
+            <h:inputSecret value="#{loginBean.password}"   
+                           id="password" required="true" 
+                           label="password" tabindex="2"
+                           requiredMessage="Password is empty"/>  
+            <f:facet name="footer">  
+                <p:commandButton id="loginButton"
+                                 value="Login" update="growl, msg"
+                                 styleClass="login-button small-button"
+                                 type="submit"
+                    actionListener="#{loginBean.login}"   
+                    oncomplete="handleLoginRequest(xhr, status, args)" tabindex="3"/>  
+            </f:facet>  
+        </h:panelGrid>    
+</h:form> 
+</div>

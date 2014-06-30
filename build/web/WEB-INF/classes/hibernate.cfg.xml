@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/supportivelearning?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">30121992</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+    <property name="hibernate.current_session_context_class">org.hibernate.context.ThreadLocalSessionContext</property>
+
+    <property name="show_sql">true</property>
+
+    <mapping class="com.eproject.learning.entity.User"/>
+    <mapping class="com.eproject.learning.entity.Role"/>
+    <mapping class="com.eproject.learning.entity.Student"/>
+    <mapping class="com.eproject.learning.entity.Assignment"/>
+    <mapping class="com.eproject.learning.entity.Batch"/>
+    <mapping class="com.eproject.learning.entity.Course"/>
+    <mapping class="com.eproject.learning.entity.FAQ"/>
+    <mapping class="com.eproject.learning.entity.Feedback"/>
+    <mapping class="com.eproject.learning.entity.MarkAssignment"/>
+    <mapping class="com.eproject.learning.entity.News"/>
+    <mapping class="com.eproject.learning.entity.Semester"/>
+    <mapping class="com.eproject.learning.entity.Subject"/>
+    <mapping class="com.eproject.learning.entity.SubjectSemester"/>
+  </session-factory>
+</hibernate-configuration>

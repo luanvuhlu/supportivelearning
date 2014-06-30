@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     style="width: 100%; "
+     >
+    <c:set var="course" value="#{courseTable.course}" />
+    <p:panelGrid columns="2"  styleClass="panel-no-border ">
+        <h:outputText value="Code" styleClass="label-form"   />
+        <h:outputText value="#{course.code}" />
+        <h:outputText value="Name"  styleClass="label-form" />
+        <h:outputText value="#{course.name}" />
+        <h:outputText value="Time" styleClass="label-form" />
+        <h:outputText value="#{course.time}"  />
+    </p:panelGrid>
+    <p:separator />
+    <p:panelGrid styleClass="panel-two-cols">
+        <p:row>
+            <p:column style="width: 20%">
+                <h:outputText value="Semesters" styleClass="header-label" />
+            </p:column>
+            <p:column>
+                <h:outputText value="Subjects" styleClass="header-label" />
+            </p:column>
+        </p:row>
+        <c:forEach items="#{courseTable.semesters}" var="semester" >
+            <p:row>
+                <p:column style="width: 20%">
+                    <h:outputText value="#{semester.name}" />
+                </p:column>
+                <p:column> 
+                    <c:forEach items="#{courseTable.getSubjects(semester)}" var="subject">
+                        <h:outputText value="#{subject.code} - #{subject.name}" />
+                        <br />
+                    </c:forEach> 
+                </p:column>      
+            </p:row>
+        </c:forEach>
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup align="left">
+            <p:button outcome="manager.xhtml?action=course&amp;a=edit&amp;c=#{course.courseId}"
+                      icon="ui-icon-pencil"
+                      title="Edit"
+                      styleClass="small-button"
+                      value="Edit" />
+            <p:commandButton 
+                value="Close"
+                icon="ui-icon-close"
+                styleClass="small-button"
+                onclick="PF('dialog-view-course').hide()" />
+        </p:toolbarGroup>
+    </p:toolbar>
+</div>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Student detail" >
+        <c:set var="student" value="#{viewStudent.student}" />
+        <p:panelGrid columns="4" styleClass="panel-no-border panel-two-cols student-detail">        
+            <h:outputText value="Username" styleClass="label-form" />
+            <h:outputText value="#{student.username}" />
+
+            <h:outputText value="Password" styleClass="label-form" />
+            <h:outputText value="#{student.password}" />
+
+            <h:outputText value="First name" styleClass="label-form" />
+            <h:outputText value="#{student.firstName}" />
+
+            <h:outputText value="Last name" styleClass="label-form" />   
+            <h:outputText value="#{student.lastName}" />
+            
+            <h:outputText value="Date Created" styleClass="label-form" />   
+            <h:outputText value="#{student.dateCreate}" />
+
+            <h:outputText value="Birthday" styleClass="label-form" />    
+            <h:outputText value="#{student.birthday}" />
+
+            <h:outputText value="Phone" styleClass="label-form" />
+            <h:outputText value="#{student.phone}" />
+
+            <h:outputText value="Email" styleClass="label-form" />
+            <h:outputText value="#{student.email}" />
+            
+            <h:outputText value="Gender" styleClass="label-form"  />
+            <c:if test="#{student.gender eq true}">
+                <h:outputText value="Male" />
+            </c:if>
+            <c:if test="#{not student.gender eq true}">
+                <h:outputText value="Female" />
+            </c:if>
+
+            <h:outputText value="Address" styleClass="label-form" />
+            <h:outputText value="#{student.address}" />
+
+            <h:outputText value="Status" styleClass="label-form" />
+            <c:if test="#{student.status eq true}">
+                <h:outputText value="Unlock" />
+            </c:if>
+            <c:if test="#{student.status eq false}">
+                <h:outputText value="Lock" />
+            </c:if>
+            
+            <h:outputText value="Batch" styleClass="label-form" />
+            <h:outputText value="#{student.batch.name}" />
+
+
+            
+
+
+        </p:panelGrid>
+        <p:toolbar>
+            <p:toolbarGroup>
+                <p:button outcome="manager.xhtml?action=student&amp;a=edit&amp;s=#{student.studentId}"
+                      icon="ui-icon-pencil" title="Edit"
+                      value="Edit" 
+                      styleClass="small-button"/>
+
+            <p:button 
+                value="View list"
+                icon="ui-icon-search"
+                styleClass="small-button"
+                outcome="manager.xhtml?action=student"
+                />
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:separator />
+        <p:panel header="Mark">
+         <p:dataTable id="form-solution-list"
+                 editMode="row"
+                 editable="true"
+                 value="#{viewStudent.marks}"
+                 var="markAssignment"
+                 emptyMessage="Empty mark"
+                 paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15">
+        <p:column headerText="Subject" sortBy="assignment.subject.code" filterBy="#{markAssignment.assignment.subject.code}">  
+            <h:outputText value="#{markAssignment.assignment.subject.code}" />  
+        </p:column>  
+        <p:column headerText="Assignment Name">  
+            <h:outputText value="#{markAssignment.assignment.name}" />  
+        </p:column>  
+        <p:column headerText="Date">  
+            <h:outputText value="#{markAssignment.date}" />  
+        </p:column>  
+        <p:column headerText="Mark" sortBy="mark">
+            <h:outputText value="#{markAssignment.mark}" />
+        </p:column>
+
+    </p:dataTable>
+            </p:panel>
+    </p:panel>
+</div>

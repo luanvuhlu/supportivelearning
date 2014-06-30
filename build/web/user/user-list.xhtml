@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     >
+    <p:panel header="User list">
+         <h:form>
+             <p:panelGrid columns="4" styleClass="panel-no-border">
+           
+            <h:outputLabel for="firstName" value="First Name" />
+            <p:inputText id="firstName" value="#{userTable.firstName}" />
+            
+            <h:outputLabel for="lastName" value="Last Name" />
+            <p:inputText id="lastName" value="#{userTable.lastName}" />
+            
+            <h:outputLabel for="username" value="Username" />
+            <p:inputText id="username" value="#{userTable.username}" />
+            
+            <h:outputLabel for="gender" value="Gender" />
+            <p:selectOneRadio id="gender" value="#{userTable.gender}" >
+                <f:selectItem itemLabel="Male" itemValue="true" />
+                <f:selectItem itemLabel="Female" itemValue="false" />
+            </p:selectOneRadio>
+            
+            <h:outputLabel for="role" value="Role" />
+            <p:selectManyCheckbox id="role" value="#{userTable.roles}" 
+                                  converter="RoleConvert" >
+                <f:selectItems value="#{userTable.allRoles}" 
+                               itemLabel="#{role.name}"
+                               itemValue="#{role}" />
+            </p:selectManyCheckbox>
+            <h:outputLabel for="batch" value="Batch" />
+            <p:selectOneMenu value="#{userTable.batch}"
+                             converter="BatchConvert">
+                <f:selectItems value="#{userTable.allBatchs}"
+                               var="batch"
+                               itemLabel="#{batch.name}"
+                               itemValue="#{batch}" />
+            </p:selectOneMenu>
+            <p:commandButton actionListener="#{userTable.search}"
+                             icon="ui-icon-search"
+                             update=":form-user-list:table-user-list" />
+        </p:panelGrid> 
+         </h:form>
+        <p:separator />
+    <h:form id="form-user-list">  
+        <p:growl id="messages" showDetail="true"/>   
+        <p:dataTable var="user" value="#{userTable.mediumUsersModel}"
+                     rowKey="#{user.userId}"
+                     id="table-user-list"
+                     selection="#{userTable.selectedUsers}"
+                     rowSelectMode="checkbox"
+                     rowStyleClass="lock-status-#{user.status}"
+                     emptyMessage="No User found !"
+                     paginator="true" rows="20"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="20,60,120">  
+            <p:ajax event="rowSelectCheckbox" listener="#{userTable.select}" update=":form-user-list:delete-button, :form-user-list:status-button" />
+            <p:ajax event="rowUnselectCheckbox" listener="#{userTable.select}" update=":form-user-list:delete-button, :form-user-list:status-button" />
+            <p:ajax event="rowSelect" listener="#{userTable.select}" update=":form-user-list:delete-button, :form-user-list:status-button" />
+            <p:ajax event="rowUnselect" listener="#{userTable.select}" update=":form-user-list:delete-button, :form-user-list:status-button" />
+            <p:column selectionMode="multiple" style="width:2%" disabledSelection="true" />
+            <p:column headerText="First Name" 
+                      sortBy="firstName" filterBy="#{user.firstName}">
+                <h:outputText value="#{user.firstName}" />
+            </p:column>
+            <p:column headerText="Last Name"
+                       sortBy="lastName" filterBy="#{user.lastName}">
+                <h:outputText value="#{user.lastName}" />
+            </p:column>
+            <p:column headerText="Username" 
+                      sortBy="username" filterBy="#{user.username}">
+                <h:outputText value="#{user.username}" />
+            </p:column>
+            <p:column headerText="Role">
+                <!--<c:forEach items="#{userTable.getRolesOfUser(user)}"  var="roleOfUser">-->
+                <h:outputText value="#{userTable.getRolesOfUser(user)}" />
+                <!--</c:forEach>-->
+            </p:column>
+            
+            <p:column style="width:4%">  
+                <p:button title="Edit"
+                          icon="ui-icon-pencil"
+                          styleClass="small-button"
+                          target="_blank"
+                          outcome="manager.xhtml?action=user&amp;a=edit&amp;u=#{user.userId}" />
+            </p:column>  
+            <p:column style="width:4%">  
+                <p:commandButton icon="ui-icon-search"
+                                 styleClass="small-button"
+                                 title="Detail"
+                                 actionListener="#{userTable.showUserDetail(user)}"
+                                 update=":form-user-list:dialog-view-user"
+                                 oncomplete="PF('dialog-view-user').show();"/>
+            </p:column> 
+        </p:dataTable>
+        <p:toolbar>  
+            <p:toolbarGroup align="left"> 
+                <p:button 
+                    icon="ui-icon-plus"
+                    styleClass="small-button"
+                    target="_blank" 
+                    outcome="manager.xhtml?action=user&amp;a=add"
+                    value="Add"/>
+                <p:commandButton value="Delete" 
+                                 actionListener="#{userTable.delete}"
+                                 id="delete-button"
+                                 disabled="#{userTable.disable}"
+                                 icon="ui-icon-close"
+                                 styleClass="small-button"
+                                 update=":form-user-list:table-user-list, :form-user-list:messages">
+                    <p:confirm header="Delete all selected users" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton value="Change Status"
+                                 id="status-button"
+                                 disabled="#{userTable.disable}"
+                                 actionListener="#{userTable.changeStatus}"
+                                 styleClass="small-button"
+                                 update=":form-user-list:table-user-list, :form-user-list:messages">
+                    <p:confirm header="Change status all selected users" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:dialog  
+            widgetVar="dialog-view-user" 
+            id="dialog-view-user"
+            header="User detail"
+            
+            resizable="false"
+            modal="true">
+            <ui:insert>
+                <ui:include src="#{userTable.dialogViewUserPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        </p:confirmDialog> 
+    </h:form>
+</p:panel>
+</div>

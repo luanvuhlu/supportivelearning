@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <p:panel header="Asinment list">
+        
+    
+    <h:form id="form-assignment-list">  
+
+        <p:growl id="messages" showDetail="true"/>  
+        <p:dataTable var="assignment" value="#{assignmentTable.assignmentsOfBatch}"
+                     rowKey="#{assignment.assignmentId}"
+                     rowStyleClass="finish-status-#{assignment.status}"
+                     id="table-assignment-list"
+                     emptyMessage="No Assignment found">  
+            <p:column headerText="Name" sortBy="name" filterBy="#{assignment.name}">
+                <h:outputText value="#{assignment.name}" />
+            </p:column>
+            <p:column headerText="File" >
+                <p:commandButton value="Download"
+                                 onclick="PrimeFaces.monitorDownload(start, stop)"
+                                 styleClass="small-button">
+                    <p:fileDownload value="#{assignmentTable.download(assignment)}" />  
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Start"  sortBy="startDate" >
+                <h:outputText value="#{assignment.startDate}" />
+            </p:column>
+            <p:column headerText="End" sortBy="endDate">
+                <h:outputText value="#{assignment.endDate}" />
+            </p:column>
+            <p:column headerText="Subject" sortBy="subject.code" filterBy="subject.code">
+                <h:outputText value="#{assignment.subject.code}" title="#{assignment.subject.name}" />
+
+            </p:column>
+            <p:column headerText="Upload Person" sortBy="user.fullName" filterBy="user.fullName">
+                <h:outputText value="#{assignment.user.fullName}" />
+            </p:column>
+            <p:column>
+                <p:commandButton styleClass="small-button" 
+                                 value="Solution" 
+                                 onclick="PF('dialog-upload-solution').show()" 
+                                 disabled="#{assignment.status}"
+                                 actionListener="#{assignmentTable.selectedAssignment(assignment)}" />
+            </p:column>
+        </p:dataTable>
+        <p:dialog widgetVar="dialog-upload-solution"
+                  modal="true">
+            <p:panelGrid>
+                 
+                <p:row>
+                    <p:column>
+                        <p:outputLabel for="new_solution" value="New" />
+                    </p:column>
+                    <p:column>
+                        <p:fileUpload
+                            id="new_solution"
+                            fileUploadListener="#{assignmentTable.filUploadListener}" 
+                            auto="true"
+                             mode="advanced"
+                             multiple="false"
+                             />
+                    </p:column>
+                </p:row>
+                <p:row>
+                    <p:column colspan="2">
+                        
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:commandButton value="Save" 
+                                     actionListener="#{assignmentTable.uploadSolution}"
+                                     oncomplete="PF('dialog-upload-solution').hide()" />
+                    <p:commandButton value="Close" onclick="PF('dialog-upload-solution').hide()" />
+                </p:toolbarGroup>
+            </p:toolbar>
+            
+            
+        </p:dialog>
+    </h:form>
+</p:panel>
+</div>

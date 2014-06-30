@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+
+     >
+    <c:set var="subject" value="#{subjectTable.currentSubject}" />
+    <p:panelGrid styleClass="panel-one-col">
+        <p:row>
+            <p:column>
+                <h:outputText value="Code" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{subject.code}" />
+            </p:column>
+        </p:row>
+        
+        <p:row>
+            <p:column >
+                <h:outputText value="Name"  />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{subject.name}" styleClass="name-input"/>
+            </p:column>
+        </p:row>
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup>
+            <p:commandButton value="Edit"
+                             icon="ui-icon-pencil"
+                             styleClass="small-button"
+                            actionListener="#{subjectTable.showEdit(subject)}"
+                            update=":form-subject-list:dialog-edit-subject"
+                            oncomplete="PF('dialog-edit-subject').show(); PF('dialog-view-subject').hide()"/>
+            <p:commandButton value="Close" 
+                             icon="ui-icon-close"
+                             styleClass="small-button"
+                             onclick="PF('dialog-view-subject').hide()" />
+        </p:toolbarGroup>
+    </p:toolbar>
+</div>

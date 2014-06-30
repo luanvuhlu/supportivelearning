@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:form id="form-batchs-in-course">
+            <p:dataTable var="batch"
+                         value="#{courseTable.batchsInCourse}"
+                         id="table-batchs-in-course">
+                <f:facet name="header">  
+                    Batchs in Course 
+                </f:facet> 
+                <p:column headerText="Batch Name">
+                    <h:outputText value="#{batch.name}" />
+                </p:column>
+                <p:column headerText="Semester">
+                    <h:outputText value="#{batchTable.getSemesterOfBatch(batch).name}" />
+                </p:column>
+                <p:column headerText="Order Semester">
+                    <h:outputText value="#{batchTable.getSemesterOfBatch(batch).order}" />
+                </p:column>
+                <f:facet name="footer">  
+                    <h:outputText value="#{fn:length(courseTable.batchsInCourse)} Batchs" />
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+</div>

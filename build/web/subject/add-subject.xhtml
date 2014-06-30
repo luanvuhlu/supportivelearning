@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <c:set var="subject" value="#{subjectTable.newSubject}" />
+<p:messages id="msg-add" showDetail="true"  />
+ <p:panelGrid columns="2" styleClass="panel-one-col">
+                <h:outputLabel for="new_code" value="Code" />
+           
+                <p:inputText id="new_code" value="#{subject.code}" />
+         
+                <h:outputLabel for="new_name" value="Name" />
+          
+                <p:inputText id="new_name" value="#{subject.name}" />  
+
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup align="left">
+            <p:commandButton value="Add"
+                             icon="ui-icon-plus"
+                             styleClass="small-button"
+                         actionListener="#{subjectTable.updateOrAdd(subject)}"
+                         update=":form-subject-list:table-subject-list, :form-subject-list:messages, :form-subject-list:msg-add"
+                         oncomplete="handleDialogRequest(xhr, status, args, 'dialog-add-subject')"
+                         />
+
+        <p:commandButton value="Close"
+                         icon="ui-icon-close"
+                             styleClass="small-button"
+                         onclick="PF('dialog-add-subject').hide()"
+                         />
+        </p:toolbarGroup>
+    </p:toolbar>
+</div>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+    <p:panel header="News list">
+    <h:form id="form-news-list">  
+        <p:growl id="messages" showDetail="true"/>  
+        <p:dataTable var="news" value="#{newsTable.mediumNewssModel}"
+                     rowKey="#{news.newsId}"
+                     id="table-news-list"
+                     selection="#{newsTable.selectedNewss}"
+                     rowSelectMode="checkbox"
+                     emptyMessage="No News found !"
+                     paginator="true" rows="20"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="20,60,120">
+            <p:ajax event="rowSelectCheckbox" listener="#{newsTable.select}" update=":form-news-list:delete-button" />
+            <p:ajax event="rowUnselectCheckbox" listener="#{newsTable.select}" update=":form-news-list:delete-button" />
+            <p:ajax event="rowSelect" listener="#{newsTable.select}" update=":form-news-list:delete-button" />
+            <p:ajax event="rowUnselect" listener="#{newsTable.select}" update=":form-news-list:delete-button" />
+            <p:column selectionMode="multiple" style="width:2%" />
+            <p:column headerText="Title" sortBy="title" filterBy="title"
+                      
+                      >
+                <h:outputText value="#{news.title}" />
+            </p:column>
+            <p:column headerText="Date" 
+                      sortBy="date" 
+                      filterBy="date"
+                      styleClass="date-column">
+                <h:outputText value="#{news.date}" />
+            </p:column>
+            <p:column style="width:4%">  
+                <p:button outcome="manager.xhtml?action=news&amp;a=edit&amp;n=#{news.newsId}"
+                          styleClass="small-button"
+                          title="Edit"
+                          icon="ui-icon-pencil"
+                          target="_blank" />
+            </p:column>  
+            <p:column style="width:4%">  
+                <p:button icon="ui-icon-search" 
+                          title="Detail"
+                          styleClass="small-button"
+                          outcome="manager.xhtml?action=news&amp;a=view&amp;n=#{news.newsId}"
+                          target="_blank" />
+            </p:column> 
+        </p:dataTable>
+        <!--Toolbar-->
+        <p:toolbar>  
+            <p:toolbarGroup align="left"> 
+                <p:button 
+                    icon="ui-icon-plus"
+                    styleClass="small-button"
+                    target="_blank" 
+                    outcome="manager.xhtml?action=news&amp;a=add"
+                    value="Add"/>
+                <p:commandButton value="Delete" 
+                                 actionListener="#{newsTable.delete}"
+                                 id="delete-button"
+                                 disabled="#{newsTable.disable}"
+                                 icon="ui-icon-close"
+                                 styleClass="small-button"
+                                 update=":form-news-list:table-news-list, :form-news-list:messages">
+                    <p:confirm header="Delete all selected newss" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+                
+            </p:toolbarGroup>
+        </p:toolbar>
+        <!--End toolbar-->
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        </p:confirmDialog>
+    </h:form>
+</p:panel>
+</div>

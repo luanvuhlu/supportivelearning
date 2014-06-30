@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:panel header="Update Batch">
+
+
+        <h:form>
+            <p:growl id="messages" showDetail="true" />
+            <p:messages id="msg" />
+            <c:set var="batch" value="#{editBatch.batch}" />
+            <p:panelGrid id="update-batch" columns="2">
+
+
+                <h:outputLabel for="name" value="Name" />
+
+
+                <p:inputText id="name" value="#{batch.name}"
+                             required="true"
+                             requiredMessage="Name is required !"/>
+
+
+
+
+                <h:outputLabel value="Course" />
+                <c:if test="#{editBatch.addMode}">
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"> 
+                        <p:selectOneRadio id="course" 
+                                          value="#{editBatch.courseId}"  
+                                          required="true"
+                                          requiredMessage="Course is required !"
+                                          >
+                            <p:ajax update="semester" />
+                            <f:selectItems value="#{editBatch.allCourse}" />
+                        </p:selectOneRadio> 
+                    </h:panelGrid>
+                </c:if>
+                <c:if test="#{not editBatch.addMode}">
+                    <h:outputText value="#{batch.course.code}" />
+                </c:if>
+
+                <h:outputLabel for="semester" value="Semester" />
+
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"> 
+                    <p:selectOneRadio id="semester" value="#{editBatch.semesterId}"
+                                      required="true"
+                                      requiredMessage="Semester is required !">
+                        <p:ajax update="subject" />
+                        <f:selectItems value="#{editBatch.semestersOfCourse}" />
+                    </p:selectOneRadio> 
+                </h:panelGrid>
+
+
+
+
+
+                <h:outputLabel for="subject" value="Subject" />
+
+
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"> 
+                    <p:selectOneRadio id="subject" value="#{editBatch.subjectId}"
+                                      required="true"
+                                      requiredMessage="Subject is required !">
+                        <p:ajax update="staff" />
+                        <f:selectItems value="#{editBatch.subjectsOfSemester}" />
+                    </p:selectOneRadio> 
+                </h:panelGrid>
+
+
+
+
+                <h:outputLabel for="staff" value="Saff" />
+
+
+                <p:selectOneMenu id="staff" value="#{editBatch.userId}"
+                                 required="true"
+                                 requiredMessage="Staff is required !">  
+                    <f:selectItems value="#{editBatch.usersHaveSubject}" />
+                </p:selectOneMenu> 
+
+
+
+            </p:panelGrid>
+
+
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{editBatch.save}"
+                                     update="update-batch, messages, msg"
+                                     />
+                    <p:commandButton 
+                        value="Reset" 
+                        icon="ui-icon-refresh"
+                        styleClass="small-button"
+                        update="update-batch, msg" 
+                        process="@this" 
+                        actionListener="#{editBatch.reset}" />
+                    <p:button 
+                        value="View list" 
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=batch"
+                        />
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+    </p:panel>
+</div>

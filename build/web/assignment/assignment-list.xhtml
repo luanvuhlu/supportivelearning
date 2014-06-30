@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Assignment list" style="overflow: scroll" >
+
+    <h:form id="form-assignment-list" prependId="true" enctype="multipart/form-data" >  
+        <p:growl id="messages" showDetail="true"/>  
+        <p:dataTable var="assignment" value="#{assignmentTable.mediumAssignmentsModel}"
+                     rowKey="#{assignment.assignmentId}"
+                     id="table-assignment-list"
+                     selection="#{assignmentTable.selectedAssignments}"
+                     rowStyleClass="finish-status-#{assignment.status}"
+                     rowSelectMode="checkbox"
+                     styleClass="data-list"
+                     emptyMessage="No Assignment found"
+                     paginator="true" rows="20"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="20,60,120"
+                     >
+            <p:ajax event="rowSelectCheckbox" listener="#{assignmentTable.select}" update=":form-assignment-list:delete-button , :form-assignment-list:status-button" />
+            <p:ajax event="rowUnselectCheckbox" listener="#{assignmentTable.select}" update=":form-assignment-list:delete-button, :form-assignment-list:status-button" />
+            <p:ajax event="rowSelect" listener="#{assignmentTable.select}" update=":form-assignment-list:delete-button, :form-assignment-list:status-button" />
+            <p:ajax event="rowUnselect" listener="#{assignmentTable.select}" update=":form-assignment-list:delete-button, :form-assignment-list:status-button" />
+            <p:column selectionMode="multiple"/>
+            <p:column headerText="Name" 
+                      sortBy="name"
+                      filterBy="name">
+                <h:outputText value="#{assignment.name}"  />
+            </p:column>
+            <p:column headerText="Batch"
+                      sortBy="batch.name"
+                      filterBy="batch.name">
+                <h:commandLink value="#{assignment.batch.name}"  />
+            </p:column>
+            <p:column headerText="Start"
+                      sortBy="startDate"
+                      filterBy="startDate">
+                <h:outputText value="#{assignment.startDate}" />
+            </p:column>
+            <p:column headerText="End"
+                      sortBy="endDate"
+                      filterBy="endDate">
+                <h:outputText value="#{assignment.endDate}" />
+            </p:column>
+            <p:column headerText="Subject"
+                      sortBy="subject.code"
+                      filterBy="subject.code">
+                <h:outputText value="#{assignment.subject.code}" />
+            </p:column>
+            <p:column headerText="Type"
+                      sortBy="type"
+                      filterBy="type">
+                <c:if test="#{assignment.type eq false}">
+                    <h:outputText value="First" />
+                </c:if>
+                <c:if test="#{assignment.type eq true}">
+                    <h:outputText value="Second" />
+                </c:if>
+            </p:column>
+            <p:column>
+                <p:button outcome="manager.xhtml?action=assignment&amp;a=edit&amp;ass=#{assignment.assignmentId}"
+                          styleClass="small-button"
+                          title="Edit"
+                          icon="ui-icon-pencil"
+                          target="_blank" />
+            </p:column>
+            <p:column >  
+                <p:commandButton icon="ui-icon-search" title="View Detail" styleClass="view-button small-button"
+                                 actionListener="#{assignmentTable.showDetail(assignment)}"
+                                 update=":form-assignment-list:dialog-view-assignment"
+                                 oncomplete="PF('dialog-view-assignment').show();"/>
+            </p:column>
+            <p:column>
+                <p:button icon="ui-icon-search"
+                          title="Solution" 
+                          styleClass="small-button"
+                          value="#{assignmentTable.hasSolution(assignment)}"
+                          outcome="manager.xhtml?action=assignment&amp;a=solution&amp;as=#{assignment.assignmentId}"/>
+            </p:column>
+        </p:dataTable>
+
+        <!--Toolbar-->
+        
+        <p:toolbar>  
+            <p:toolbarGroup align="left"> 
+                <p:button 
+                    icon="ui-icon-plus"
+                    styleClass="small-button"
+                    target="_blank" 
+                    outcome="manager.xhtml?action=assignment&amp;a=add"
+                    value="Add"/>
+                <p:commandButton value="Delete" 
+                                 actionListener="#{assignmentTable.delete}"
+                                 id="delete-button"
+                                 disabled="#{assignmentTable.disable}"
+                                 icon="ui-icon-close"
+                                 styleClass="small-button"
+                                 update=":form-assignment-list:table-assignment-list, :form-assignment-list:messages">
+                    <p:confirm header="Delete all selected assignments" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+                <p:commandButton value="Change Status"
+                                 id="status-button"
+                                 disabled="#{assignmentTable.disable}"
+                                 actionListener="#{assignmentTable.changeStatus}"
+                                 styleClass="small-button"
+                                 update=":form-assignment-list:table-assignment-list, :form-assignment-list:messages">
+                    <p:confirm header="Change status all selected assignments" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <!--End toolbar-->
+        <p:dialog  widgetVar="dialog-view-assignment" 
+                   id="dialog-view-assignment"
+                   modal="true"
+                   header="Assignment Detail">
+            <ui:insert>
+                <ui:include src="#{assignmentTable.dialogViewPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        </p:confirmDialog> 
+    </h:form>
+</p:panel>
+</div>

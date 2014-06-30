@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     style="width: 100%; "
+     >
+    <c:set var="batch" value="#{batchTable.currentBatch}" />
+    <p:panelGrid>
+       
+        <p:row>
+            <p:column>
+                <h:outputText value="Name" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.name}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Student number" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{fn:length(batch.students)} students"  />
+                
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Start date" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.startDate}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Subjects" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.subject.code}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Semester" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.semester.name}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Course" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.course.code}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Staff" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{batch.user.fullName}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <p:button value="Edit"
+                          outcome="manager.xhtml?action=batch&amp;a=edit&amp;b=#{batch.name}" />
+            </p:column>
+            <p:column >
+                <p:commandButton value="Close" onclick="PF('dialog-view-batch').hide()" />
+            </p:column>
+        </p:row>
+    </p:panelGrid>
+</div>

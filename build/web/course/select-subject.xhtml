@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+
+    <p:dataTable var="subject" value="#{updateCourse.mediumSubjectsModel}"
+                 rowKey="#{subject.subjectId}"
+                 selection="#{updateCourse.selectedSubjects}"
+                 selectionMode="multiple"
+                 emptyMessage="No Subject found"
+                 id="table-subject-list"
+                 > 
+        <p:column selectionMode="multiple" style="width:2%" />
+        <p:column headerText="Code" sortBy="code" filterBy="code">
+            <h:outputText value="#{subject.code}" />
+        </p:column>
+        <p:column headerText="Name" sortBy="name" filterBy="name">
+            <h:outputText value="#{subject.name}" />
+        </p:column> 
+    </p:dataTable>
+    <p:toolbar>
+        <p:toolbarGroup align="left">
+            <p:commandButton icon="ui-icon-search" title="Select"
+                             actionListener="#{updateCourse.selectSubject}"
+                             update=":update-course:subject-list"
+                             oncomplete="PF('dialog-select-subject').hide();"/>
+        </p:toolbarGroup>
+    </p:toolbar>
+
+</div>

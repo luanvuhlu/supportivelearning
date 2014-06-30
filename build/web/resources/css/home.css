@@ -1,0 +1,246 @@
+body{
+    background:#0f5a90;
+    z-index: 1;
+}
+
+.title-div{
+margin-bottom:10px;
+margin-bottom:10px;
+padding:5px;
+background:#70df73;
+border-top-left-radius: 15px;
+border-top-right-radius:15px;
+text-align:center;
+font-weight:900;
+padding-bottom:10px;
+}
+.small-button span{
+  font-size:13px;
+}
+
+.date-column{
+    width: 15%;
+}
+
+.lock-status-true, .finish-status-true, .isStudying-true{
+background:#c3e9fe;
+}
+.unfinish-true{
+background:#c3e9fe;
+}
+
+.date-input{
+    width:100px;
+}
+
+.code-input, .code-column{
+    width:80px;
+}
+
+.header-label{
+font-weight:900;
+font-size:1em;
+padding:5px;
+margin-top:20px;
+margin-bottom:20px;
+}
+
+.label-form{
+font-weight:700;
+font-size:1em
+}
+
+
+.panel-no-border, .panel-no-border td, .panel-no-border tr{
+border: 0px white;
+
+}
+.panel-one-col, .panel-two-cols, .panel-three-cols{
+    width: 100%;
+}
+.panel-three-cols td{
+    width: 33%;
+}
+.panel-two-cols td{
+    width: 25%;
+}
+
+.panel-one-col td{
+    width: 90%;
+}
+.panel-one-col tr td:first-of-type{
+    width: 100px;
+}
+
+#wrapper{
+margin-left:5%;
+margin-right:5%;
+background: white;
+}
+/*
+
+    Header
+
+*/
+#header{
+margin-bottom: 10px;
+
+}
+#header .banner{    
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:-1;
+    height: 240px;
+}
+#header .account{
+    //background: #1b1b1b;
+    float: right;
+    padding: 1px 5px;
+    margin-right: 20px;
+}
+#message-account{
+position:relative;
+}
+#message-account-count{
+position:absolute;
+z-index:999;
+top:12px;
+padding:1px 2px 1px 2px;
+left:30px;
+background:red;
+color:white;
+bold:900;
+}
+
+
+#header .account .account-link a{
+    font-size: 12px;
+    color: black;
+    text-decoration: none;
+}
+.account-link .menu-account{
+    position:relative;
+}
+.account-link .menu-account td {
+    height:20px;
+}
+.account-link .menu-account td, .menu-account tr {
+    font-size:15px;
+    border:none;
+}
+
+.account-link .menu-account {
+    position:absolute;
+    right:20px;
+    display:none;
+    z-index:999;
+}
+.account-link:hover{
+    cursor: pointer;
+}
+.account-link:hover .menu-account {
+    display:block;
+}
+.account-link .menu-account .username-label{
+    font-size:25px;
+    font: bolder;
+    position:absolute;
+    top:5px;
+}
+.menu-top{
+    top: 0px;
+    border:none;
+     background:#70df73;
+}
+.menu-top span.ui-menuitem-text{
+    font-size: 20px;
+    padding: 5px 20px 5px 20px;
+
+}
+
+/*
+
+Left
+
+
+*/
+
+#left-content{
+float:left;
+width:16%;
+}
+#left-content .menu-left{
+width:100%;
+ background:#70df73;
+}
+.menu-left span{
+    
+    font-size: 20px;
+    padding: 5x 20px 5px 10px;
+
+}
+
+/*
+
+Center
+
+
+*/
+
+#center-content{
+margin-left:2%;
+float:left;
+max-width:82%;
+min-height:400px;
+}
+
+.image-switch img{
+
+
+width:600px;
+height:400px;
+}
+
+/*
+
+
+Right
+
+
+*/
+#right-content{
+float :left;
+width:20%;
+}
+
+/*
+
+
+Footer
+
+
+*/
+.clear{
+clear:both;
+background:red;
+}
+.footer{
+      margin-top:50px;
+height:50px;
+    background: #002133;
+    text-align: center;
+    color: white;
+}
+
+
+/*
+
+News
+
+*/
+
+#update-news td, #update-news tr{
+border:0px;
+}

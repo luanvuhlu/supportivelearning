@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" >
+    <p:panel header="Course list" >
+    <h:form id="form-course-list">  
+        <p:growl id="messages" showDetail="true"/>  
+        <p:dataTable var="course" value="#{courseTable.mediumCoursesModel}"
+                     rowKey="#{course.courseId}"
+                     selection="#{courseTable.selectedCourses}"
+                     rowSelectMode="checkbox"
+                     emptyMessage="No Course found"
+                     id="table-course-list">  
+            <p:ajax event="rowSelectCheckbox" listener="#{courseTable.select}" update=":form-course-list:delete-button" />
+            <p:ajax event="rowUnselectCheckbox" listener="#{courseTable.select}" update=":form-course-list:delete-button" />
+            <p:ajax event="rowSelect" listener="#{courseTable.select}" update=":form-course-list:delete-button" />
+            <p:ajax event="rowUnselect" listener="#{courseTable.select}" update=":form-course-list:delete-button" />
+            <p:column selectionMode="multiple" style="width:2%" />  
+            <p:column headerText="Code" style="width:10%"
+                      >  
+
+                        <h:outputText value="#{course.code}" />  
+
+            </p:column>  
+
+            <p:column headerText="Name" style="width:70%">  
+
+                        <h:outputText value="#{course.name}" />  
+
+            </p:column>  
+
+            <p:column headerText="Time" styleClass="date-column">  
+
+                        <h:outputText value="#{course.time}" />  
+
+            </p:column>
+            <p:column style="width:4%">  
+                <p:button icon="ui-icon-pencil"
+                          styleClass="small-button"
+                          target="_blank"
+                          outcome="manager.xhtml?action=course&amp;a=edit&amp;c=#{course.courseId}" />
+            </p:column>  
+            <p:column style="width:4%">  
+                <p:commandButton icon="ui-icon-search" 
+                                 styleClass="small-button"
+                                 title="View Detail"
+                                 actionListener="#{courseTable.showDetail(course)}"
+                                 update=":form-course-list:dialog-view-course"
+                                 oncomplete="PF('dialog-view-course').show();"/>
+            </p:column>
+            
+        </p:dataTable>  
+        <p:toolbar>  
+            <p:toolbarGroup align="left"> 
+                <p:button target="_blank"
+                          value="Add"
+                          outcome="manager.xhtml?action=course&amp;a=add"
+                          icon="ui-icon-plus"
+                          styleClass="small-button"/>
+                <p:commandButton icon="ui-icon-close"
+                                 id="delete-button"
+                                 value="Delete"
+                                 styleClass="small-button"
+                                 actionListener="#{courseTable.delete}"
+                                 disabled="#{courseTable.disable}"
+                                 update=":form-course-list:table-course-list, :form-course-list:messages">
+                    <p:confirm header="Delete all selected courses" message="Are you sure?" icon="ui-icon-alert" />
+                </p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:dialog  widgetVar="dialog-view-course" 
+                   id="dialog-view-course"
+                   header="Course Detail"
+                   closeOnEscape="true"
+                   modal="true"
+                   resizable="true"
+                   minHeight="600"
+                   width="600">
+            <ui:insert>
+                <ui:include src="#{courseTable.dialogViewPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+        </p:confirmDialog>
+    </h:form>
+        </p:panel>
+</div>

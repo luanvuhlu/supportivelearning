@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <c:set var="user" value="#{userTable.currentUser}" />
+    <p:panelGrid styleClass="panel-tow-cols">
+        <p:row>
+            <p:column colspan="2">
+                <p:graphicImage name="avarta.jpg" library="image" width="100" height="100" />
+                <h:outputText value="#{user.username}" />
+            </p:column>
+        </p:row>
+        
+        <p:row>
+            <p:column>
+                <h:outputText value="Password" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.password}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="First name" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.firstName}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Last name" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.lastName}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Roles" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{userTable.getRolesOfUser(user)}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Batchs" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{userTable.getBatchsOfStaff(user)}" />
+            </p:column>
+        </p:row>
+        <c:if test="#{userTable.isStaff}">
+            <p:row>
+            <p:column>
+                <h:outputText value="Subjects" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{userTable.getSubjectsOfStaff(user)}" />
+            </p:column>
+        </p:row>
+        </c:if>
+        
+        <p:row>
+            <p:column>
+                <h:outputText value="Date Created" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.dateCreate}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Birthday" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.birthday}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Phone" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.phone}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Email" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.email}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Gender" />
+            </p:column>
+            <p:column>
+                <c:if test="#{user.gender eq true}">
+                    <h:outputText value="Male" />
+                </c:if>
+                <c:if test="#{not user.gender eq true}">
+                    <h:outputText value="Female" />
+                </c:if>
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Address" />
+            </p:column>
+            <p:column>
+                <h:outputText value="#{user.address}" />
+            </p:column>
+        </p:row>
+        <p:row>
+            <p:column>
+                <h:outputText value="Status" />
+            </p:column>
+            <p:column>
+                <c:if test="#{user.status eq true}">
+                    <h:outputText value="Unlock" />
+                </c:if>
+                <c:if test="#{not user.status eq true}">
+                    <h:outputText value="Lock" />
+                </c:if>
+            </p:column>
+        </p:row>
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup>
+            <p:button value="Edit"
+                      styleClass="small-button"
+                      icon="ui-icon-pencil"
+                          target="_blank"
+                          outcome="manager.xhtml?action=user&amp;a=edit&amp;u=#{user.userId}" />
+             <p:commandButton value="Close" 
+                              icon="ui-icon-close"
+                              styleClass="small-button"
+                              onclick="PF('dialog-view-user').hide()" />
+        </p:toolbarGroup>
+    </p:toolbar>
+</div>

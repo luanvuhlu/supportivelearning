@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     id="content"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+   
+    <c:set var="path" value="#{view.viewId}" />
+    <div id="wrapper">
+        <div id="header">
+            <ui:insert>
+                <ui:include src="header.xhtml" />
+            </ui:insert>
+        </div>
+        <div id="left-content">
+            <ui:insert>
+                <ui:include src="/menu/menu-left.xhtml" />
+                <ui:include src="calendar-left.xhtml" />
+                <ui:include src="web-link.xhtml" />
+                <ui:include src="contact-left.xhtml" />
+            </ui:insert>
+        </div>
+        <div id="center-content">
+            <ui:insert>
+                <c:if test="#{path eq '/index.xhtml'}">
+                    <ui:include src="slideShow.xhtml" />
+                </c:if>
+                <c:if test="#{path eq '/manager.xhtml'}">
+                    <ui:include src="#{includeManagerController.path}" />
+                </c:if>
+                <c:if test="#{path eq '/news.xhtml'}">
+                    <ui:include src="/view-news/news.xhtml" />
+                </c:if>
+            </ui:insert>
+        </div>
+         <c:if test="#{path eq '/index.xhtml'}">
+             <div id="right-content">
+                <ui:insert>
+                   <ui:include src="ads-right.xhtml" />           
+                </ui:insert>
+             </div>
+        </c:if>   
+        <div class="clear" />
+        <div id="footer">
+            <ui:insert>
+                <ui:include src="footer.xhtml" />
+            </ui:insert>
+        </div>
+    </div>
+
+</div>

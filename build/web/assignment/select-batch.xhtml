@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     > 
+    <p:dataTable var="batch" value="#{updateAssignment.batchs}"
+                     rowKey="#{batch.batchId}"
+                     id="table-batch-list"
+                     emptyMessage="No Batch found"
+                     paginator="true" rows="20"
+                     selection="#{updateAssignment.assignment.batch}"
+                     selectionMode="single"
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="20,40,60"> 
+        <p:ajax event="rowSelect"
+                listener="#{updateAssignment.onBatchSelect}"
+                update=":update-assignment:batch, :update-assignment:subject"
+                                 oncomplete="PF('dialog-select-batch').hide();" />
+            <p:column headerText="Name">
+                <h:commandLink value="#{batch.name}"  />
+            </p:column>
+            <p:column headerText="Unfinish Assignment">
+                <h:commandLink value="#{fn:length(updateAssignment.getUnfinishAssignment(batch))}" />
+            </p:column>
+        <p:column headerText="Current Subject">
+            <h:outputText value="#{batch.subject.code}" />
+            </p:column>
+            <p:column headerText="Semester">
+                <h:outputText value="#{batch.semester.name}" />
+            </p:column>
+           <p:column headerText="Course">
+                <h:outputText value="#{batch.course.code}" />
+            </p:column>
+        </p:dataTable> 
+
+</div>

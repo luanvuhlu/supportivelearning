@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     id="news-detail"
+     >
+    <p:panel header="News detail" styleClass="main-panel">      
+    <h:form>
+        <c:set var="news" value="#{viewNews.news}" />
+        <p:growl id="messages" showDetail="true" />
+        <p:messages id="msg" showDetail="true" />
+        <p:panelGrid columns="2" styleClass="panel-one-col">
+                    <h:outputText value="Title"  styleClass="label-form" />
+
+                    <h:outputText value="#{news.title}" />
+                    <h:outputText value="Header"  styleClass="label-form" />
+
+                    <h:outputText value="#{news.header}" escape="false" />
+
+                    <h:outputText value="Date Create"  styleClass="label-form" />
+
+                    <h:outputText value="#{news.date}" />
+
+                    <h:outputText value="Content"  styleClass="label-form" />
+
+                    <h:outputText value="#{news.content}"  escape="false" />                 
+        </p:panelGrid>
+        <p:toolbar>
+            <p:toolbarGroup align="left">
+                <p:button outcome="manager.xhtml?action=news&amp;a=edit&amp;n=#{news.newsId}"
+                              icon="ui-icon-pencil"
+                              title="Edit"
+                              styleClass="small-button"
+                              value="Edit" />
+                    <p:button 
+                        value="View list" 
+                        icon="ui-icon-search"
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=news"
+                        />
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
+        </p:panel>
+</div>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     style="width: 100%; "
+     >
+    <p:panel header="FAQ detail">
+    <h:form>
+        <c:set var="fAQ" value="#{viewFAQ.fAQ}" />
+        <p:panelGrid columns="2" styleClass="panel-one-col" >
+           
+                    <h:outputText value="Question" />
+               
+                    <h:outputText value="#{fAQ.question}" />
+               
+                    <h:outputText value="Date Create" />
+               
+                    <h:outputText value="#{fAQ.date}" />
+               
+                    <h:outputText value="Answer" />
+             
+                    <h:outputText value="#{fAQ.answer}"  escape="false" />
+        </p:panelGrid>
+        <p:toolbar>
+            <p:toolbarGroup align="left">
+                <p:button outcome="manager.xhtml?action=faq&amp;a=edit&amp;f=#{faq.faqId}"
+                              icon="ui-icon-pencil"
+                              title="Edit"
+                              styleClass="small-button"
+                              value="Edit" />
+
+                    <p:button 
+                        value="View list" 
+                        icon="ui-icon-search"
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=faq"
+                        />
+            </p:toolbarGroup>
+        </p:toolbar>
+    </h:form>
+    </p:panel>
+</div>

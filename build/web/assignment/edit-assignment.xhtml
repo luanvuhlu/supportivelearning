@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <p:panel header="Update Assignment">
+        <h:form id="update-assignment"  >
+            <p:growl id="messages" showDetail="true" />
+            <p:messages id="msg" showDetail="true" />
+            <c:set var="assignment" value="#{updateAssignment.assignment}" />
+            <p:panelGrid columns="4">
+
+                <h:outputLabel for="name" value="Name" />
+
+                <p:inputText id="name" value="#{assignment.name}"
+                             required="true"
+                             requiredMessage="Name is required !"/>
+<h:outputLabel for="type" value="Type" />
+
+                <p:selectBooleanButton id="type" value="#{assignment.type}" 
+                                       onLabel="Second" offLabel="First"
+                                       onIcon="ui-icon-check" 
+                                       offIcon="ui-icon-close" 
+                                       styleClass="small-button"/>
+                <c:if test="#{not updateAssignment.addMode}">
+                    <h:outputLabel for="filePath" value="Old File" />
+
+
+                <p:commandButton value="Download" ajax="true" onclick="PrimeFaces.monitorDownload(start, stop)"   
+                                 icon="ui-icon-arrowthichk-s"
+                                 styleClass="small-button">  
+                    <p:fileDownload value="#{updateAssignment.download(assignment)}" />  
+                </p:commandButton>    
+                </c:if>
+                
+                <h:outputText value="New file" />
+                <p:fileUpload id="filePath" 
+                              update="messages, msg"
+                              dragDropSupport="true"                               
+                              mode="advanced"
+                              multiple="false"
+                              required="true"
+                              auto="true"
+                              fileUploadListener="#{updateAssignment.filUploadListener}"
+                             requiredMessage="File is required !"/> 
+
+
+                <c:if test="#{not updateAssignment.addMode}">
+                    <h:outputLabel for="status" value="Status" />
+                    <p:selectBooleanButton styleClass="small-button" id="status" value="#{assignment.status}" onLabel="Finish" offLabel="Unfinish" onIcon="ui-icon-check" offIcon="ui-icon-close"/>
+                </c:if>
+                
+
+                <h:outputLabel  value="Description" />
+
+                <p:inputTextarea  value="#{assignment.description}" />
+
+                <h:outputLabel for="startDate" value="Start" />
+
+                <p:calendar id="startDate" value="#{assignment.startDate}"
+                            required="true"
+                             requiredMessage="Start Date is required !"/>
+
+                
+
+                <h:outputLabel for="batch" value="Batch" />
+                <c:if test="#{not updateAssignment.addMode}" >
+                    <h:outputText id="batch" value="#{assignment.batch.name}" />
+                </c:if>
+                <c:if test="#{updateAssignment.addMode}">
+                    <p:commandButton id="batch" value="#{assignment.batch.name}"
+                                     styleClass="select-button  small-button"
+                                     onclick="PF('dialog-select-batch').show()"
+                                     />
+
+                </c:if>
+                <h:outputLabel for="endDate" value="End" />
+
+                <p:calendar id="endDate" value="#{assignment.endDate}"
+                            required="true"
+                             requiredMessage="End date is required !"/>
+                <h:outputLabel for="subject" value="Subject" />
+                <c:if test="#{updateAssignment.addMode}">
+                
+                    <h:outputText id="subject" value="#{assignment.batch.subject.code}" />
+                    </c:if>
+                <c:if test="#{not updateAssignment.addMode}">
+                    <h:outputText id="subject" value="#{assignment.subject.code}" />
+                </c:if>
+            </p:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{updateAssignment.save}"
+                                     update="update-assignment, messages, msg"
+                                     />
+                    <p:commandButton 
+                        value="Reset" 
+                        icon="ui-icon-refresh"
+                        styleClass="small-button"
+                        update="update-assignment, msg" 
+                        process="@this" 
+                        actionListener="#{updateAssignment.reset}" />
+                    <p:button 
+                        value="View list" 
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=assignment"
+                        />
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dialog widgetVar="dialog-select-batch" 
+                      id="dialog-select-batch"
+                      width="50%">
+                <ui:include src="#{updateAssignment.dialogSelectBatchPath}" />
+            </p:dialog>
+
+        </h:form>        
+    </p:panel>
+</div>

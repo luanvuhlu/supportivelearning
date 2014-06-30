@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Solution: #{markTable.assignment.name}">
+        
+    
+    <h:form>
+        <p:growl id="messages" showDetail="true" />
+    <p:dataTable id="form-solution-list"
+                 editMode="row"
+                 editable="true"
+                 value="#{markTable.marks}"
+                 var="markAssignment"
+                 emptyMessage="Empty solution"
+                 paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15">
+        <p:ajax event="rowEdit" listener="#{markTable.editMark}" />
+         <p:column headerText="Roll Student"
+                   sortBy="student.roll"
+                   filterBy="student.roll">  
+             <h:outputLink value="manager.xhtml?action=student&amp;a=view&amp;s=#{markAssignment.student.studentId}"
+                           title="#{markAssignment.student.firstName} #{markAssignment.student.firstName}">
+                 <h:outputText value="#{markAssignment.student.roll}" />
+             </h:outputLink>
+                
+        </p:column>  
+        <p:column headerText="First Name"
+                  sortBy="student.firstName"
+                   filterBy="student.firstName">  
+            <h:outputText value="#{markAssignment.student.firstName}" />   
+        </p:column>  
+        <p:column headerText="Last Name"
+                  sortBy="student.lastName"
+                   filterBy="student.lastName">  
+            <h:outputText value="#{markAssignment.student.lastName}" />   
+        </p:column> 
+        <p:column headerText="Date"
+                  sortBy="date"
+                   filterBy="date">  
+            <h:outputText value="#{markAssignment.date}" />  
+        </p:column>  
+        <p:column headerText="Solution">
+                <p:commandButton value="Download" ajax="true" onclick="PrimeFaces.monitorDownload(start, stop)"   
+                                 icon="ui-icon-arrowthichk-s"
+                                 styleClass="small-button">  
+                    <p:fileDownload value="#{assignmentTable.downloadSolution(markAssignment)}" />  
+                </p:commandButton>
+        </p:column>
+        <p:column>
+            <p:cellEditor>  
+                <f:facet name="output">
+                    <h:outputText value="#{markAssignment.mark}" />
+                </f:facet>  
+                <f:facet name="input">
+                    <p:inputText type="number" value="#{markAssignment.mark}" label="Mark"/>
+                </f:facet>  
+            </p:cellEditor>  
+        </p:column>
+        <p:column>  
+            <p:rowEditor />  
+        </p:column> 
+    </p:dataTable>
+    </h:form>
+        </p:panel>
+</div>

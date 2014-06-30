@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Mark">
+    <h:form>
+        <p:growl id="messages" showDetail="true" />
+    <p:dataTable id="form-solution-list"
+                 editMode="row"
+                 editable="true"
+                 value="#{markViewTable.marks}"
+                 var="markAssignment"
+                 emptyMessage="Empty mark"
+                 paginator="true" rows="10"  
+                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                 rowsPerPageTemplate="5,10,15">
+        <p:column headerText="Subject" sortBy="assignment.subject.code" filterBy="#{markAssignment.assignment.subject.code}">  
+            <h:outputText value="#{markAssignment.assignment.subject.code}" />  
+        </p:column>  
+        <p:column headerText="Assignment Name">  
+            <h:outputText value="#{markAssignment.assignment.name}" />  
+        </p:column>  
+        <p:column headerText="Date">  
+            <h:outputText value="#{markAssignment.date}" />  
+        </p:column>  
+        <p:column headerText="Mark" sortBy="mark">
+
+                    <h:outputText value="#{markAssignment.mark}" />
+
+        </p:column>
+
+    </p:dataTable>
+    </h:form>
+        </p:panel>
+</div>

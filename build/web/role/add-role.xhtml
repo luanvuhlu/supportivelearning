@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <c:set var="role" value="#{roleTable.newRole}" />
+    <p:messages id="msg-add" showDetail="true"  />
+    <p:panelGrid columns="2">
+
+        <h:outputLabel for="new_name" value="Name" />
+
+        <p:inputText id="new_name" value="#{role.name}" />  
+
+        <h:outputLabel for="new_description" value="Description" />
+
+        <p:inputTextarea id="new_description" value="#{role.description}"
+                         rows="5" cols="21"
+                         maxlength="100"
+                         autoResize="false"/>
+
+        
+
+    </p:panelGrid>
+    <p:toolbar>
+        <p:toolbarGroup align="left">
+            <p:commandButton value="Add"
+                              icon="ui-icon-plus"
+                             styleClass="small-button"
+                         actionListener="#{roleTable.updateOrAdd(role)}"
+                         update=":form-role-list:table-role-list, :form-role-list:messages, :form-role-list:msg-add"
+                         oncomplete="handleDialogRequest(xhr, status, args, 'dialog-add-role')"
+                         />
+
+        <p:commandButton value="Close" 
+                          icon="ui-icon-close"
+                             styleClass="small-button"
+                         onclick="PF('dialog-add-role').hide()"
+                         />
+        </p:toolbarGroup>
+    </p:toolbar>
+</div>

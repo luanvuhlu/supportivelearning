@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<h:form >  
+    <p:dialog id="dialog" header="Login" 
+              widgetVar="role-chooseer-dialog" 
+              resizable="false"
+              modal="true">  
+  
+    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5"> 
+   <h:outputText value="Basic Usage: " />  
+   <p:selectOneMenu value="#{loginBean.role}" tabindex="1">  
+            <f:selectItem itemLabel="Select One" itemValue="" />  
+            <f:selectItem itemLabel="Staff" itemValue="staff" />  
+            <f:selectItem itemLabel="Admin" itemValue="admin" />  
+        </p:selectOneMenu>  
+   </h:panelGrid>  
+        <h:panelGrid columns="2" cellpadding="5">    
+            <f:facet name="footer">  
+                <p:commandButton id="loginButton" value="Login"  
+                                 actionListener="#{loginBean.setRoleAccount}"   
+                                 tabindex="2" ajax="true"
+                                 oncomplete="window.location.reload()"/>  
+                <p:commandButton value="Cancel" onclick="PF('role-chooseer-dialog').hide()" tabindex="3" />
+            </f:facet>  
+        </h:panelGrid>   
+    </p:dialog>  
+</h:form> 
+</div>

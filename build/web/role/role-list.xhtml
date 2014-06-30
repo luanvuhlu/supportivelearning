@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Role list">
+        <h:form id="form-role-list">  
+            <p:growl id="messages" showDetail="true"/>  
+            <p:dataTable var="role" 
+                         value="#{roleTable.mediumRolesModel}"
+                         rowKey="#{role.roleId}"
+                         id="table-role-list"
+                         selection="#{roleTable.selectedRoles}"
+                         rowSelectMode="checkbox">  
+
+                <p:ajax event="rowSelectCheckbox" listener="#{roleTable.select}" update=":form-role-list:delete-button" />
+                <p:ajax event="rowUnselectCheckbox" listener="#{roleTable.select}" update=":form-role-list:delete-button" />
+                <p:ajax event="rowSelect" listener="#{roleTable.select}" update=":form-role-list:delete-button" />
+                <p:ajax event="rowUnselect" listener="#{roleTable.select}" update=":form-role-list:delete-button" />
+                
+                <p:column selectionMode="multiple" style="width:2%" />
+                <p:column headerText="Name">
+                    <h:outputText value="#{role.name}" />
+                </p:column>
+                <p:column headerText="Description">
+                    <h:outputText value="#{role.description}" />
+                </p:column>
+                <p:column style="width:4%">  
+                    <p:commandButton icon="ui-icon-pencil"
+                                     title="Edit role"
+                                     styleClass="small-button"
+                                     actionListener="#{roleTable.showEdit(role)}"
+                                     update=":form-role-list:dialog-edit-role"
+                                     oncomplete="PF('dialog-edit-role').show();"/>
+                </p:column>  
+            </p:dataTable>
+            <p:toolbar>  
+                <p:toolbarGroup align="left"> 
+                    <p:commandButton value="Add"
+                                     icon="ui-icon-plus"
+                                     styleClass="small-button"
+                                     oncomplete="PF('dialog-add-role').show()"
+                                     actionListener="#{roleTable.showAddDialog}"/>
+                    <p:commandButton value="Delete"
+                                     actionListener="#{roleTable.delete}"
+                                     id="delete-button"
+                                     disabled="#{roleTable.disable}"
+                                     icon="ui-icon-close"
+                                     styleClass="small-button"
+                                     update=":form-role-list:table-role-list, :form-role-list:messages">
+                        <p:confirm header="Delete all selected role" message="Are you sure?" icon="ui-icon-alert" />
+                    </p:commandButton>
+                </p:toolbarGroup>
+            </p:toolbar>
+            <p:dialog widgetVar="dialog-add-role" 
+                      id="dialog-add-role"  
+                      header="Add Role" 
+                      resizable="false"
+                      modal="true">
+                <ui:insert>
+                    <ui:include src="#{roleTable.dialogAddPath}" />
+                </ui:insert>
+            </p:dialog>
+            <p:dialog widgetVar="dialog-edit-role" 
+                      id="dialog-edit-role"
+                      resizable="false"
+                      header="Edit Role" 
+                      minHeight="400"
+                      width="400"
+                      modal="true">
+                <ui:insert>
+                    <ui:include src="#{roleTable.dialogEditPath}" />
+                </ui:insert>
+            </p:dialog>
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+            </p:confirmDialog> 
+        </h:form>
+    </p:panel>     
+</div>

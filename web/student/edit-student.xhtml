@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     id="update-student">
+    <p:panel header="Update Student">
+        
+        <c:set var="student" value="#{updateStudent.student}" />
+        <h:form id="update-student">
+            <p:growl id="messages" showDetail="true" />
+            <p:messages id="msg"  showDetail="true"  />
+            <p:panelGrid columns="4" styleClass="panel-no-border panel-two-cols">
+                <c:if test="#{not updateStudent.addMode}">
+
+                    <h:outputLabel for="username" value="Username" />
+
+                    <p:inputText id="username" value="#{student.username}"
+                                 required="true"
+                                 requiredMessage="Username is required"/>
+
+                    <h:outputLabel for="password" value="Password" />
+
+                    <p:inputText id="password" value="#{student.password}"
+                                 required="true"
+                                 requiredMessage="Password is required"/>
+
+                </c:if>
+
+                <h:outputLabel for="firstName" value="First name" />
+
+                <p:inputText id="firstName" value="#{student.firstName}" 
+                             required="true"
+                             requiredMessage="First Name is required"/>
+
+                <h:outputLabel for="lastName" value="Last Name" />
+
+                <p:inputText id="lastName" value="#{student.lastName}" 
+                             required="true"
+                             requiredMessage="Last Name is required"/>
+
+                <h:outputLabel for="batch" value="Batch" />
+                <p:commandButton id="batch" 
+                                 styleClass="small-button"
+                                 ajax="true"
+                                 value="#{updateStudent.batch.name}" 
+                                 icon="ui-icon-extlink" 
+                                 actionListener="#{updateStudent.chooseBatch}"
+                                 > 
+                    <p:ajax event="dialogReturn" listener="#{updateStudent.onBatchChosen}" update="batch, messages" /> 
+                </p:commandButton>  
+
+                <h:outputLabel for="birthday" value="Birthday" />
+
+                <p:inputText id="birthday" value="#{student.birthday}" /> 
+
+                <h:outputLabel for="phone" value="Phone" />
+
+                <p:inputText id="phone" value="#{student.phone}"   
+                             /> 
+
+                <h:outputLabel for="email" value="Email" />
+
+                <p:inputText id="email" value="#{student.email}"  /> 
+
+
+                <h:outputLabel for="gender" value="Gender" />
+                <p:selectBooleanButton id="gender" value="#{student.gender}"
+                                       styleClass="small-button"
+                                       onLabel="Male" offLabel="Female"
+                                       onIcon="ui-icon-check" offIcon="ui-icon-close"
+                                       />
+                <c:if test="#{not updateStudent.addMode}">
+
+                    <h:outputLabel for="status" value="Status" />
+
+                    <p:selectBooleanButton id="status" value="#{student.status}"
+                                           styleClass="small-button"
+                                           onLabel="Lock" offLabel="Unlock"
+                                           onIcon="ui-icon-check" offIcon="ui-icon-close"
+                                           />
+
+                </c:if>
+
+                <h:outputLabel for="address" value="Address" />
+
+                <p:inputTextarea id="address" value="#{student.address}"
+                                 
+                                 rows="5" cols="21"
+                                 maxlength="100"
+                                 autoResize="false"
+                                 /> 
+
+
+
+            </p:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{updateStudent.save}"
+                                     update="update-student, messages, msg"
+                                     />
+                    <p:commandButton 
+                        value="Reset" 
+                        icon="ui-icon-refresh"
+                        styleClass="small-button"
+                        update="update-student, msg" 
+                        process="@this" 
+                        actionListener="#{updateStudent.reset}" />
+                    <p:button 
+                        value="View list" 
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=student"
+                        />
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+    </p:panel>
+</div>

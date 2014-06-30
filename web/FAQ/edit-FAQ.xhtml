@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:panel header="Update FAQs">
+    <h:form>
+        <p:growl id="messages" showDetail="true"/>  
+        <p:messages id="msg" showDetail="false"  />
+        <c:set var="fAQ" value="#{updateFAQ.fAQ}" />
+        <p:panelGrid id="update-faq" columns="2" style="panel-one-col">
+
+                    <h:outputLabel for="question" value="Question" />
+
+                    <p:inputText id="question" value="#{fAQ.question}"
+                                 styleClass="question-input"
+                                 required="true"
+                                 requiredMessage="Question is required !"/>
+
+                    <h:outputLabel for="answer" value="Answer" />
+
+                    <p:editor id="answer" value="#{fAQ.answer}"
+                              width="700"
+                              height="500"
+                              required="true"
+                              requiredMessage="Answer is required !"/>  
+
+
+        </p:panelGrid>
+         <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{updateFAQ.save}"
+                                     update="update-faq, messages, msg"
+                                     />
+                    <p:commandButton 
+                        value="Reset" 
+                        icon="ui-icon-refresh"
+                        styleClass="small-button"
+                        update="update-faq, msg" 
+                        process="@this" 
+                        actionListener="#{updateFAQ.reset}" />
+                    <p:button 
+                        value="View list" 
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=faq"
+                        />
+                </p:toolbarGroup>
+            </p:toolbar>
+    </h:form>
+    </p:panel>
+</div>

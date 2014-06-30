@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+    xmlns:h="http://java.sun.com/jsf/html"  
+    xmlns:f="http://java.sun.com/jsf/core"  
+    xmlns:ui="http://java.sun.com/jsf/facelets"  
+    xmlns:p="http://primefaces.org/ui"
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions">  
+    <h:head>  
+        <title>Batchs</title>  
+    </h:head>  
+    <h:body>  
+    <h:form>  
+        <p:dataTable var="batch" value="#{updateStudent.allBatchs}"
+                     rowKey="#{batch.batchId}"
+                     id="table-batch-list"
+                     selection="#{updateStudent.batch}"
+                     selectionMode="single"> 
+            <p:column headerText="Name">
+                <h:outputText value="#{batch.name}" />
+            </p:column>
+            <p:column headerText="Student Number">
+                <h:commandLink value="#{fn:length(batch.students)}"  />
+            </p:column>
+            <p:column headerText="Start Date">
+                <h:outputText value="#{batch.startDate}" />
+            </p:column>
+            <p:column headerText="Semester">
+                <h:outputText value="#{batch.semester.name}" />
+            </p:column>
+           <p:column headerText="Course">
+                <h:outputText value="#{batch.course.code}" />
+            </p:column>
+            <p:column style="width:4%">  
+                <p:commandButton id="select-batch-button"
+                                 icon="ui-icon-search"
+                                 title="Select"
+                                 actionListener="#{updateStudent.selectBatchFromDialog(batch)}"
+                                 />
+            </p:column>  
+        </p:dataTable> 
+    </h:form>
+ </h:body>    
+</html>  

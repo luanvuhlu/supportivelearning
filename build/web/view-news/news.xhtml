@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <c:if test="#{not showNews.detail}">
+    
+        <c:forEach var="news" items="#{showNews.newsLimit}">
+        <p:panelGrid  style="width: 100%">
+            <p:row>
+                <p:column style="width: 200px">
+                    <p:graphicImage name="avarta.jpg" library="image" width="200" height="200" />
+                </p:column>
+                <p:column>
+                    <p:panelGrid columns="1" style="width: 100%">
+                        <h:outputLink value="news.xhtml?view=#{news.newsId}" styleClass="news-title">
+                            #{news.title}
+                        </h:outputLink>
+                        <h:outputText value="#{news.header}" escape="false" />
+                    </p:panelGrid>
+                </p:column>
+            </p:row>
+        </p:panelGrid>
+    </c:forEach>
+        <div class="news-pagination">
+            <h:outputLink value="news.xhtml">
+                First
+            </h:outputLink>
+            <c:forEach var="page" items="#{showNews.listPage}" >
+                <h:outputLink value="news.xhtml?page=#{page}">
+                    #{page}
+                </h:outputLink>
+            </c:forEach>
+            <h:outputLink value="news.xhtml?page=#{showNews.lastPage}">
+                Last
+            </h:outputLink>
+        </div>
+        </c:if>
+    <c:if test="#{showNews.detail}">
+        <div>
+            
+        
+        <c:set var="news" value="#{showNews.news}" />
+        <h:outputLink value="news.xhtml?view=#{news.newsId}" >
+            #{news.title}
+        </h:outputLink>
+        <p:toolbar>
+            <p:toolbarGroup align="left">
+                <h:outputText value="#{news.date}" />
+            </p:toolbarGroup>
+            <p:toolbarGroup align="right">
+                <h:outputText value="Cha biet" />
+            </p:toolbarGroup>
+        </p:toolbar>
+        <h:outputText value="#{news.header}" escape="false" />
+        <p:separator />
+        <h:outputText value="#{news.content}" escape="false" />
+        </div>
+        <div>
+            <h:outputText value="News more" />
+            <p:separator />
+            
+        </div>
+    </c:if>
+</div>

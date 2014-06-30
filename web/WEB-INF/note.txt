@@ -1,0 +1,12 @@
+Course:
+    1. Chưa sắp xếp được Subject 
+    2. Chuyển Subject chưa được
+    3. Hiển thị thông báo
+
+Assigment:
+    1. Edit Assignment bị lỗi
+    2. 
+
+General
+    Các phần Reset hoạt động còn chưa hiệu quả
+    Hiển thị trạng thái chưa chuẩn

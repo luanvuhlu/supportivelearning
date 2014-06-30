@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+     id="update-news">
+    <p:panel header="Update News">
+        <h:form>
+            <p:growl id="messages" showDetail="true"/>
+            <p:messages id="msg" showDetail="true"  />
+            <c:set var="news" value="#{updateNews.news}" />
+            <p:panelGrid id="update-news" columns="2" styleClass="panel-one-col">
+                <h:outputLabel for="title" value="Title" styleClass="label-form" />
+                <p:inputText id="title" value="#{news.title}"
+                             size="50"
+                             required="true" requiredMessage="Title is required" />
+                <h:outputText value="Header" styleClass="label-form" />
+                <p:editor id="header" value="#{news.header}"
+                          styleClass="header-input"
+                             required="true" 
+                             width="700"
+                             height="200"
+                             requiredMessage="Header is required" />
+
+                <h:outputText  value="" />
+
+                <p:editor id="content" value="#{news.content}" 
+                          width="700"
+                          height="800"
+                           required="true" 
+                           styleClass="content-input"
+                           requiredMessage="Content is required" />  
+            </p:panelGrid>
+            <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{updateNews.save}"
+                                     update="update-news, messages, msg"
+                                     />
+                    <p:commandButton 
+                        value="Reset" 
+                        icon="ui-icon-refresh"
+                        styleClass="small-button"
+                        update="update-news, msg" 
+                        process="@this" 
+                        actionListener="#{updateNews.reset}" />
+                    <p:button 
+                        value="View list" 
+                        styleClass="small-button"
+                        outcome="manager.xhtml?action=news"
+                        />
+                </p:toolbarGroup>
+            </p:toolbar>
+        </h:form>
+    </p:panel>
+</div>

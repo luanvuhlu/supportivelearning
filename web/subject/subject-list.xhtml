@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Subject list">
+        
+    
+    <h:form id="form-subject-list">  
+        <p:growl id="messages" showDetail="true"/>  
+        <p:dataTable var="subject" 
+                     value="#{subjectTable.mediumSubjectsModel}"
+                     rowKey="#{subject.subjectId}"
+                     id="table-subject-list"
+                     selection="#{subjectTable.selectedSubjects}"
+                     rowSelectMode="checkbox"
+                     rowStyleClass="isStudying-#{subjectTable.isStudying(subject)}"
+                     emptyMessage="No Subject found !"
+                     paginator="true" rows="20"  
+                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"  
+                     rowsPerPageTemplate="20,60,120">  
+            <p:ajax event="rowSelectCheckbox" listener="#{subjectTable.select}" update=":form-subject-list:delete-button"/>
+             <p:ajax event="rowUnselectCheckbox" listener="#{subjectTable.select}" update=":form-subject-list:delete-button" />
+             <p:ajax event="rowSelect" listener="#{subjectTable.select}" update=":form-subject-list:delete-button"/>
+             <p:ajax event="rowUnselect" listener="#{subjectTable.select}" update=":form-subject-list:delete-button" />
+            <p:column selectionMode="multiple" style="width:2%"  />
+            <p:column headerText="Code" sortBy="code" 
+                      filterBy="#{subject.code}"
+                      styleClass="code-column">
+                <h:outputText value="#{subject.code}" />
+            </p:column>
+            <p:column headerText="Name" sortBy="name" filterBy="#{subject.name}">
+                <h:outputText value="#{subject.name}" />
+            </p:column>
+            <p:column style="width:4%">  
+                <p:commandButton  icon="ui-icon-pencil"
+                                     title="Edit subject"
+                                     styleClass="small-button"
+                                     actionListener="#{subjectTable.showEdit(subject)}"
+                                     update=":form-subject-list:dialog-edit-subject"
+                                     oncomplete="PF('dialog-edit-subject').show(); PF('dialog-view-subject').hide();"/>
+            </p:column>  
+            <p:column style="width:4%">  
+                <p:commandButton icon="ui-icon-search" 
+                                 title="View Detail"
+                                 styleClass="small-button"
+                                 actionListener="#{subjectTable.showDetail(subject)}"
+                                 update=":form-subject-list:dialog-view-subject"
+                                 oncomplete="PF('dialog-view-subject').show();"/>
+            </p:column> 
+        </p:dataTable>
+        <p:toolbar>  
+            <p:toolbarGroup align="left"> 
+                <p:commandButton value="Add"
+                                     icon="ui-icon-plus"
+                                     styleClass="small-button"
+                                     actionListener="#{subjectTable.showAddDialog}"
+                                     update=":form-subject-list:dialog-add-subject"
+                                     oncomplete="PF('dialog-add-subject').show()"
+                                     />
+                    <p:commandButton value="Delete"
+                                     actionListener="#{subjectTable.delete}"
+                                     id="delete-button"
+                                     disabled="#{subjectTable.disable}"
+                                     icon="ui-icon-close"
+                                     styleClass="small-button"
+                                     update=":form-subject-list:table-subject-list, :form-subject-list:messages">
+                        <p:confirm header="Delete all selected subjects" message="Are you sure?" icon="ui-icon-alert" />
+                    </p:commandButton>
+            </p:toolbarGroup>
+        </p:toolbar>
+        <p:dialog  widgetVar="dialog-view-subject"
+                   modal="true"
+                   id="dialog-view-subject"
+                   width="400"
+                   header="Subject detail">
+            <ui:insert>
+                <ui:include src="#{subjectTable.dialogViewPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:dialog widgetVar="dialog-add-subject" 
+                  modal="true"
+                  width="400"
+                  id="dialog-add-subject"
+                  header="Add subject">
+            <ui:insert>
+                <ui:include src="#{subjectTable.dialogAddPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:dialog widgetVar="dialog-edit-subject"
+                  modal="true"
+                  width="400"
+                  id="dialog-edit-subject"
+                  header="Edit subject">
+            <ui:insert>
+                <ui:include src="#{subjectTable.dialogEditPath}" />
+            </ui:insert>
+        </p:dialog>
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+            </p:confirmDialog> 
+    </h:form>
+</p:panel>
+</div>

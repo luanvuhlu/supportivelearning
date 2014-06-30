@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core" 
+     xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+     >
+    <p:panel header="Add student">
+        
+    
+    <h:form>
+        <p:messages id="msg" />
+        <p:growl id="messages" showDetail="true" />
+        <p:panelGrid id="add-student" columns="2">
+            
+                
+                    <h:outputText value="Batch" />
+                
+                
+                    <h:outputText value="#{addStudentBatch.batch.name}" />
+                
+            
+            
+                
+                    <h:outputText value="Course" />
+                
+                
+                    <h:outputText value="#{addStudentBatch.batch.course.code}" />
+                
+            
+            
+                
+                    <h:outputText value="Semester" />
+                
+                
+                    <h:outputText value="#{addStudentBatch.batch.semester.name}" />
+                
+            
+            
+                
+                    <h:outputText value="Current Student number" />
+                
+                
+                    <h:outputText value="#{fn:length(addStudentBatch.batch.students)}" />
+                
+            
+            
+ 
+                    <h:outputText value="Student infomation"  />
+                    <h:outputText value="" />
+                
+            
+            
+                
+                    <h:outputLabel for="firstName" value="First Name" />
+                
+                
+                    <p:inputText id="firstName" 
+                                 value="#{addStudentBatch.student.firstName}" 
+                                 required="true"
+                                 requiredMessage="First name is required"/>
+                
+            
+            
+                
+                    <h:outputLabel for="lastName" value="Last Name"/>
+                
+                
+                    <p:inputText id="lastName" required="true"
+                                 requiredMessage="Last name is required"
+                                 value="#{addStudentBatch.student.lastName}" />
+                
+            
+            
+                
+                    <h:outputLabel for="birthday" value="Birthday"/>
+                
+                
+                    <p:inputText id="birthday" placeholder="dd/mm/yyyy" value="#{addStudentBatch.student.birthday}" >
+                        <f:convertDateTime pattern="dd/mm/yyyy" />
+                    </p:inputText>
+                
+            
+            
+                
+                    <h:outputLabel for="phone" value="Phone"/>
+                
+                
+                    <p:inputText id="phone" value="#{addStudentBatch.student.phone}" />
+                
+            
+            
+                
+                    <h:outputLabel for="email" value="Email"/>
+                
+                
+                    <p:inputText id="email" value="#{addStudentBatch.student.email}" />
+                
+            
+            
+                
+                    <h:outputLabel for="gender" value="Gender" />
+                
+                
+                    <p:selectOneRadio id="gender" value="#{addStudentBatch.student.gender}">  
+                        <f:selectItem itemLabel="Male" itemValue="true" />  
+                        <f:selectItem itemLabel="Female" itemValue="false" /> 
+                    </p:selectOneRadio>  
+                
+            
+            
+                
+                    <h:outputLabel for="address" value="Address"/>
+                
+                
+                    <p:inputText id="address"  value="#{addStudentBatch.student.address}" />
+
+                    
+                
+            
+        </p:panelGrid>
+        <p:toolbar>
+                <p:toolbarGroup align="left">
+                    <p:commandButton value="Save"
+                                     icon="ui-icon-check"
+                                     styleClass="small-button"
+                                     actionListener="#{addStudentBatch.add}"
+                                     update="add-student, messages, msg"
+                                     />
+                    <p:commandButton value="Reset"
+                                     update="add-student, msg" 
+                                     process="@this"  
+                                     icon="ui-icon-refresh"
+                        styleClass="small-button">  
+                        <p:resetInput target="add-student" />  
+                    </p:commandButton>
+                    
+                </p:toolbarGroup>
+            </p:toolbar>
+    </h:form>
+</p:panel>
+</div>

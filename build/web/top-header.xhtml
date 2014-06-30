@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<div xmlns="http://www.w3.org/1999/xhtml"
+     xmlns:h="http://java.sun.com/jsf/html"
+     xmlns:f="http://java.sun.com/jsf/core"
+     xmlns:ui="http://java.sun.com/jsf/facelets"
+     xmlns:p="http://primefaces.org/ui"
+     class="account"
+     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <div class="account-link">
+        <h:form>
+        <c:if test="#{authentication.account eq null}" >
+            <p:commandLink onclick="PF('dlg').show()">
+                Đăng nhập / Đăng ký
+            </p:commandLink>
+        </c:if>
+        <c:set var="account" value="#{authentication.account}" />
+        <c:if test="#{not (authentication.account eq null)}" >
+            <span id="message-account">
+                <span id="message-account-count">
+                    0
+                </span>
+            <p:commandButton icon="ui-icon-mail-closed" styleClass="small-button" />
+            </span>
+            <p:commandButton value="#{account.firstName} #{account.lastName}"
+                             styleClass="small-button" />
+            
+            <p:commandButton actionListener="#{loginBean.logout}"
+                             styleClass="small-button"
+                            title="Logout" value="Logout" ajax="true"
+                            oncomplete="window.location.reload()"/>
+           
+        </c:if>
+         </h:form>
+    </div>
+    <div id="login-dialog" />
+        <p:dialog id="dialog"
+                  modal="true"
+              header="Login" 
+              widgetVar="dlg" 
+              resizable="false"
+              closeOnEscape="true"
+              styleClass="login-dialog" > 
+            <ui:insert>
+                <ui:include src="login-dialog.xhtml" />
+            </ui:insert>
+        </p:dialog>
+</div>
